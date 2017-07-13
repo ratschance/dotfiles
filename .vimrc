@@ -19,6 +19,8 @@ call plug#begin('~/.vim/plugged')
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'scrooloose/syntastic'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 Plug 'rust-lang/rust.vim'
 call plug#end()
 
@@ -27,18 +29,20 @@ set history=1000
 set ffs=unix,dos,mac
 set isk+=_,$,@,%,# " Remove these characters from word dividers
 set nosol
+imap jk <Esc>
 
 " Vim UI
 set backspace=2 " Normal backspace
 set cmdheight=1 " Set command bar line to 1 high
 set cursorline
 set list " Show tabs
-set listchars=tab:>-,trail:- " Mark tabs and trailing whitespace
+set listchars=tab:>·,trail:· " Mark tabs and trailing whitespace
 set lz " LazyRedraw
 set mouse=a " Allow mouse use
 set noerrorbells
 set number " Line numbers
 set report=0
+set rnu " Relative line numbers
 set shortmess=atI " Shorten messages
 set so=10
 set whichwrap+=<,>,h,l  " Let backspace and cursor keys wrap
