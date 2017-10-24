@@ -16,12 +16,14 @@ colorscheme apprentice
 
 " Plugins
 call plug#begin('~/.vim/plugged')
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'scrooloose/syntastic'
+Plug 'airblade/vim-gitgutter'
+Plug 'itchyny/lightline.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'rust-lang/rust.vim'
+Plug 'sheerun/vim-polyglot'
+Plug 'tpope/vim-fugitive'
+Plug 'w0rp/ale'
 call plug#end()
 
 " General
@@ -46,8 +48,6 @@ set rnu " Relative line numbers
 set shortmess=atI " Shorten messages
 set so=10
 set whichwrap+=<,>,h,l  " Let backspace and cursor keys wrap
-let g:airline_powerline_fonts = 1
-let g:airline_theme='bubblegum'
 
 " Cues
 set incsearch
@@ -55,6 +55,11 @@ set laststatus=2
 set nohlsearch
 set novisualbell
 set showmatch " Highlight matching brackets
+
+" Wildmenu
+set wildmenu
+set wildmode=list:longest,full
+set wildignore=*.o,*~,.git
 
 " Indent fixes
 set ai
@@ -75,11 +80,69 @@ set preserveindent
 set shiftround
 set smartcase
 
+" Lightline
+" Next few functions from github.com/statico/dotfiles
+let g:lightline = {
+            \ 'colorscheme': 'jellybeans',
+            \ 'active': {
+            \   'left': [['mode', 'paste'], ['filename', 'modified']],
+            \   'right': [['lineinfo'], ['percent', 'filetype'], ['readonly', 'linter_warnings', 'linter_errors', 'linter_ok']]
+            \ },
+            \ 'component_expand': {
+            \   'linter_warnings': 'LightlineLinterWarnings',
+            \   'linter_errors': 'LightlineLinterErrors',
+            \   'linter_ok': 'LightlineLinterOK'
+            \ },
+            \ 'component_type': {
+            \   'readonly': 'error',
+            \   'linter_warnings': 'warning',
+            \   'linter_errors': 'error'
+            \ },
+            \}
+
+function! LightlineLinterWarnings() abort
+    let l:counts = ale#statusline#Count(bufnr(''))
+    let l:all_errors = l:counts.error + l:counts.style_error
+    let l:all_non_errors = l:counts.total - l:all_errors
+    return l:counts.total == 0 ? '' : printf('%d ◆', all_non_errors)
+endfunction
+
+function! LightlineLinterErrors() abort
+    let l:counts = ale#statusline#Count(bufnr(''))
+    let l:all_errors = l:counts.error + l:counts.style_error
+    let l:all_non_errors = l:counts.total - l:all_errors
+    return l:counts.total == 0 ? '' : printf('%d Ж', all_errors)
+endfunction
+
+function! LightlineLinterOK() abort
+    let l:counts = ale#statusline#Count(bufnr(''))
+    let l:all_errors = l:counts.error + l:counts.style_error
+    let l:all_non_errors = l:counts.total - l:all_errors
+    return l:counts.total == 0 ? '✓ ' : ''
+endfunction
+
+autocmd User ALELint call lightline#update()
+
+"Ale
+let g:ale_sign_warning='◆'
+let g:ale_sign_error='Ж'
+highlight link ALEWarningSign String
+highlight link ALEErrorSign Title
+
+"GitGutter
+let g:gitgutter_sign_added='·'
+let g:gitgutter_sign_modified='·'
+let g:gitgutter_sign_removed='·'
+let g:gitgutter_sign_modified_removed='·'
+
 
 au BufRead,BufNewFile *.rb,*.erb set tabstop=2
 au BufRead,BufNewFile *.rb,*.erb set shiftwidth=2
 au BufRead,BufNewFile *.rb,*.erb set softtabstop=2
+au BufRead,BufNewFile *.adoc set filetype=asciidoc
 au FileType python set omnifunc=pythoncomplete#Complete
 au FileType c set omnifunc=ccomplete#Complete
+
+command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>).'| tr -d "\017"', 1, <bang>0)
 
 syntax on

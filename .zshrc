@@ -1,5 +1,8 @@
 source ~/.antigen/antigen.zsh
 
+export http_proxy="http://secproxy.rockwellcollins.com:9090"
+export https_proxy="https://secproxy.rockwellcollins.com:9090"
+
 antigen use oh-my-zsh
 
 antigen theme https://github.com/ratschance/lambda-mod-zsh-theme lambda-mod
@@ -7,7 +10,8 @@ antigen theme https://github.com/ratschance/lambda-mod-zsh-theme lambda-mod
 antigen bundle zsh-users/zsh-completions src
 antigen bundle zsh-users/zsh-syntax-highlighting
 antigen bundle history-substring-search
-antigen bundle rimraf/k
+#antigen bundle rimraf/k
+antigen bundle teancom/k
 
 BULLETTRAIN_TIME_SHOW=false
 
@@ -25,10 +29,27 @@ bindkey -r '^[i'
 bindkey -r '^[o'
 bindkey -r '^[p'
 
+alias ..='cd ..'
+alias ...='cd ../..'
 alias ll='ls -AlhGF'
+alias kk='k -Ah'
+alias tmux='tmux -2'
+alias vim='VIMRUNTIME=/usr/share/vim/vim74 nvim'
 alias dockdel='docker rm $(docker ps -a -q -f status=exited)'
 export PATH=$HOME/bin:$PATH
-export PATH="$PATH:/usr/local/go/bin"
-export GOPATH="$HOME/projects/go"
-export PATH="$PATH:$GOPATH/bin"
+
+function smake(){
+    make $@ |& tee -a "$(timestamp).vucs.log"
+}
+
+function timestamp(){
+    date +"%F-%T"
+}
+
+function gen(){
+    asciidoctor ${1} -D ~/www/notes
+}
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
 
