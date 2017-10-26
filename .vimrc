@@ -9,10 +9,16 @@ if empty(glob('~/.vim/colors/apprentice.vim'))
         \ https://raw.githubusercontent.com/romainl/Apprentice/master/colors/apprentice.vim
 endif
 
+if empty(glob('~/.vim/colors/solarized8_dark.vim'))
+    silent !curl -fLo ~/.vim/colors/solarized8_dark.vim --create-dirs
+        \ https://raw.githubusercontent.com/lifepillar/vim-solarized8/master/colors/solarized8_dark.vim
+endif
+
 " Important
 set nocompatible
 let &t_Co=256
-colorscheme apprentice
+"set background=dark
+colorscheme solarized8_dark
 
 " Plugins
 call plug#begin('~/.vim/plugged')
@@ -42,7 +48,6 @@ set listchars=tab:>·,trail:· " Mark tabs and trailing whitespace
 set lz " LazyRedraw
 set mouse=a " Allow mouse use
 set noerrorbells
-set number " Line numbers
 set report=0
 set rnu " Relative line numbers
 set shortmess=atI " Shorten messages
