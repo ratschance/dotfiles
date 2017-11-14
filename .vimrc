@@ -141,12 +141,10 @@ let g:gitgutter_sign_removed='·'
 let g:gitgutter_sign_modified_removed='·'
 
 
-au BufRead,BufNewFile *.rb,*.erb set tabstop=2
-au BufRead,BufNewFile *.rb,*.erb set shiftwidth=2
-au BufRead,BufNewFile *.rb,*.erb set softtabstop=2
+au BufRead,BufNewFile *.rb,*.erb set tabstop=2 shiftwidth=2 softtabstop=2
+au BufRead,BufNewFile *.py set tabstop=4 shiftwidth=4 softtabstop=4
 au BufRead,BufNewFile *.adoc set filetype=asciidoc
-au FileType python set omnifunc=pythoncomplete#Complete
-au FileType c set omnifunc=ccomplete#Complete
+au BufWritePost *.adoc silent !adoc.py <afile>:p
 
 command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>).'| tr -d "\017"', 1, <bang>0)
 
