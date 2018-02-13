@@ -27,6 +27,7 @@ Plug 'itchyny/lightline.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'rust-lang/rust.vim'
+Plug 'scrooloose/nerdtree'
 Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-fugitive'
 Plug 'w0rp/ale'
@@ -141,9 +142,12 @@ let g:gitgutter_sign_modified='·'
 let g:gitgutter_sign_removed='·'
 let g:gitgutter_sign_modified_removed='·'
 
+"NerdTree
+map <C-n> :NERDTreeToggle<CR>
 
 au BufRead,BufNewFile *.rb,*.erb set tabstop=2 shiftwidth=2 softtabstop=2
 au BufRead,BufNewFile *.py set tabstop=4 shiftwidth=4 softtabstop=4
+au BufRead,BufNewFile *.c,*.h set noet
 au BufRead,BufNewFile *.adoc set filetype=asciidoc
 au BufWritePost *.adoc silent !adoc.py <afile>:p
 
