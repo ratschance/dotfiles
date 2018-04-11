@@ -26,6 +26,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'itchyny/lightline.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+Plug 'majutsushi/tagbar'
 Plug 'rust-lang/rust.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'sheerun/vim-polyglot'
@@ -55,6 +56,12 @@ set rnu " Relative line numbers for all but current line
 set shortmess=atI " Shorten messages
 set so=10
 set whichwrap+=<,>,h,l  " Let backspace and cursor keys wrap
+
+"window settings
+nmap <silent> <Up> :wincmd k<CR>
+nmap <silent> <Down> :wincmd j<CR>
+nmap <silent> <Left> :wincmd h<CR>
+nmap <silent> <Right> :wincmd l<CR>
 
 " Cues
 set incsearch
@@ -118,7 +125,7 @@ function! LightlineLinterErrors() abort
     let l:counts = ale#statusline#Count(bufnr(''))
     let l:all_errors = l:counts.error + l:counts.style_error
     let l:all_non_errors = l:counts.total - l:all_errors
-    return l:counts.total == 0 ? '' : printf('%d Ж', all_errors)
+    return l:counts.total == 0 ? '' : printf('%d ✗', all_errors)
 endfunction
 
 function! LightlineLinterOK() abort
@@ -132,7 +139,7 @@ autocmd User ALELint call lightline#update()
 
 "Ale
 let g:ale_sign_warning='◆'
-let g:ale_sign_error='Ж'
+let g:ale_sign_error='✗'
 highlight link ALEWarningSign String
 highlight link ALEErrorSign Title
 
@@ -144,6 +151,9 @@ let g:gitgutter_sign_modified_removed='·'
 
 "NerdTree
 map <C-n> :NERDTreeToggle<CR>
+
+"TagBar
+map <F8> :TagbarToggle<CR>
 
 au BufRead,BufNewFile *.rb,*.erb set tabstop=2 shiftwidth=2 softtabstop=2
 au BufRead,BufNewFile *.py set tabstop=4 shiftwidth=4 softtabstop=4
