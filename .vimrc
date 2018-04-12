@@ -9,10 +9,15 @@ if empty(glob('~/.vim/colors/apprentice.vim'))
         \ https://raw.githubusercontent.com/romainl/Apprentice/master/colors/apprentice.vim
 endif
 
+if empty(glob('~/.vim/colors/solarized.vim'))
+    silent !curl -fLo ~/.vim/colors/solarized.vim --create-dirs
+        \ https://raw.githubusercontent.com/altercation/vim-colors-solarized/master/colors/solarized.vim
+endif
+
 " Important
 set nocompatible
 let &t_Co=256
-"set background=dark
+set background=dark
 colorscheme apprentice
 
 " Plugins
