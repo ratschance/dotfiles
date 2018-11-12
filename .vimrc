@@ -18,7 +18,7 @@ endif
 set nocompatible
 let &t_Co=256
 set background=dark
-colorscheme apprentice
+colorscheme solarized
 
 " Plugins
 call plug#begin('~/.vim/plugged')

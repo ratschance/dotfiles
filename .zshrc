@@ -1,6 +1,6 @@
 source ~/.antigen/antigen.zsh
 antigen use oh-my-zsh
-antigen theme https://github.com/ratschance/lambda-mod-zsh-theme lambda-mod
+antigen theme https://github.com/ratschance/hodgepodge-theme hodgepodge
 antigen bundle zsh-users/zsh-completions src
 antigen bundle zsh-users/zsh-syntax-highlighting
 antigen bundle history-substring-search
