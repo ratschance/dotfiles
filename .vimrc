@@ -51,6 +51,7 @@ set mouse=a " Allow mouse use
 set noerrorbells
 set report=0
 set rnu " Relative line numbers
+set nu " Show current absolute line number
 set shortmess=atI " Shorten messages
 set so=10
 set whichwrap+=<,>,h,l  " Let backspace and cursor keys wrap
