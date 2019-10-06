@@ -15,6 +15,12 @@ bindkey -r '^[i'
 bindkey -r '^[o'
 bindkey -r '^[p'
 
+setopt HIST_EXPIRE_DUPS_FIRST
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_IGNORE_SPACE
+setopt HIST_SAVE_NO_DUPS
+
 alias ll='ls -AlhGF'
 
 [ -f ~/.zprofile ] && source ~/.zprofile
