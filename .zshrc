@@ -23,4 +23,8 @@ setopt HIST_SAVE_NO_DUPS
 
 alias ll='ls -AlhGF'
 
+apt-history() {
+    zcat -qf /var/log/apt/history.log* | grep -Po '^Commandline: apt install (?!.*--reinstall)\K.*'
+}
+
 [ -f ~/.zprofile ] && source ~/.zprofile
