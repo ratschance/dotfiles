@@ -153,6 +153,7 @@ let g:gitgutter_sign_modified_removed='·'
 map <F8> :TagbarToggle<CR>
 
 au BufRead,BufNewFile *.rb,*.erb set tabstop=2 shiftwidth=2 softtabstop=2
+au BufRead,BufNewFile *.go set tabstop=8 shiftwidth=8 softtabstop=8 noet
 
 command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>).'| tr -d "\017"', 1, <bang>0)
 
