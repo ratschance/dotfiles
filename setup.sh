@@ -3,15 +3,15 @@
 SCRIPT_DIR="${HOME}/projects/dotfiles"
 
 # Vim setup
-[ -d "${HOME}/.vim" ] || mkdir ~/.vim
-[ -e "${HOME}/.vimrc" ] || ln -s ${SCRIPT_DIR}/.vimrc ~/.vimrc
+[ -d "$HOME/.vim" ] || mkdir ~/.vim
+[ -e "$HOME/.vimrc" ] || ln -s "$SCRIPT_DIR/.vimrc" ~/.vimrc
 
 # Tmux setup
-[ -e "${HOME}/.tmux.conf" ] || ln -s ${SCRIPT_DIR}/.tmux.conf ~/.tmux.conf
+[ -e "$HOME/.tmux.conf" ] || ln -s "$SCRIPT_DIR/.tmux.conf" ~/.tmux.conf
 
 # Zsh setup
-[ -e "${HOME}/.zshrc" ] || ln -s ${SCRIPT_DIR}/.zshrc ~/.zshrc
-if [ ! -d "${HOME}/.antigen" ]
+[ -e "$HOME/.zshrc" ] || ln -s "$SCRIPT_DIR/.zshrc" ~/.zshrc
+if [ ! -d "$HOME/.antigen" ]
 then
     mkdir ~/.antigen
     curl -L git.io/antigen > ~/.antigen/antigen.zsh
@@ -22,6 +22,13 @@ fi
 [ -e "${HOME}/.config/starship.toml" ] || ln -s ${SCRIPT_DIR}/starship.toml ~/.config/starship.toml
 
 # NeoVim setup
-[ -e "${HOME}/.vim/init.vim" ] || ln -s ${SCRIPT_DIR}/.vimrc ~/.vim/init.vim
-[ -d "${HOME}/.config/nvim" ] || ln -s ~/.vim ~/.config/nvim
+[ -e "$HOME/.vim/init.vim" ] || ln -s "$SCRIPT_DIR/.vimrc" ~/.vim/init.vim
+[ -d "$HOME/.config/nvim" ] || ln -s ~/.vim ~/.config/nvim
+
+# Alacritty setup
+if [ ! -d "$HOME/.config/alacritty" ]; then
+    mkdir -p "$HOME/.config/alacritty/themes"
+    git clone https://github.com/alacritty/alacritty-theme ~/.config/alacritty/themes
+fi
+[ -e "$HOME/.config/alacritty/alacritty.toml" ] || ln -s "$SCRIPT_DIR/alacritty.toml" ~/.config/alacritty/alacritty.toml
 

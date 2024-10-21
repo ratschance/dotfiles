@@ -1,0 +1,7 @@
+import = [
+    "~/.config/alacritty/themes/themes/solarized_dark.toml"
+]
+
+[font]
+normal={ family="FiraCode Nerd Font" }
+size=13
