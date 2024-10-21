@@ -1,0 +1,18 @@
+add_newline = false
+
+[character]
+success_symbol = "[→](cyan)"
+error_symbol = "[→](red)"
+
+[directory]
+truncate_to_repo = false
+style = "#ec00bb"
+format = "[$path]($style)[$read_only]($read_only_style) "
+
+[git_branch]
+style = "yellow"
+
+[username]
+format = "[|](cyan)[$user]($style)[|](cyan) "
+show_always = true
+

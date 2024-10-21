@@ -17,6 +17,10 @@ then
     curl -L git.io/antigen > ~/.antigen/antigen.zsh
 fi
 
+[ -e "$HOME/bin" ] || mkdir -p "$HOME/bin"
+[ -e "$HOME/bin/starship" ] || curl -sS https://starship.rs/install.sh | sh -s -- --bin-dir "$HOME/bin"
+[ -e "${HOME}/.config/starship.toml" ] || ln -s ${SCRIPT_DIR}/starship.toml ~/.config/starship.toml
+
 # NeoVim setup
 [ -e "${HOME}/.vim/init.vim" ] || ln -s ${SCRIPT_DIR}/.vimrc ~/.vim/init.vim
 [ -d "${HOME}/.config/nvim" ] || ln -s ~/.vim ~/.config/nvim
