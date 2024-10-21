@@ -11,12 +11,11 @@ endif
 
 if empty(glob('~/.vim/colors/solarized.vim'))
     silent !curl -fLo ~/.vim/colors/solarized.vim --create-dirs
-        \ https://raw.githubusercontent.com/altercation/vim-colors-solarized/master/colors/solarized.vim
+        \ https://raw.githubusercontent.com/frankier/neovim-colors-solarized-truecolor-only/master/colors/solarized.vim
 endif
 
 " Important
 set nocompatible
-"let &t_Co=256
 set background=dark
 colorscheme solarized
 
@@ -53,7 +52,7 @@ set hidden
 set backspace=indent,eol,start " Normal backspace
 "set cmdheight=1 " Set command bar line to 1 high
 set cursorline
-set list " Show tabs
+"set list " Show tabs
 set listchars=tab:>·,trail:· " Mark tabs and trailing whitespace
 "set lz " LazyRedraw
 set mouse=a " Allow mouse use
@@ -106,7 +105,7 @@ set smartcase
 " Lightline
 " Next few functions from github.com/statico/dotfiles
 let g:lightline = {
-            \ 'colorscheme': 'jellybeans',
+            \ 'colorscheme': 'solarized',
             \ 'active': {
             \   'left': [['mode', 'paste'], ['filename', 'modified']],
             \   'right': [['lineinfo'], ['percent', 'filetype'], ['readonly', 'linter_warnings', 'linter_errors', 'linter_ok']]
