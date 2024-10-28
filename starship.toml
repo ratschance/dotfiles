@@ -1,12 +1,12 @@
 add_newline = false
 
 [character]
-success_symbol = "[→](cyan)"
+success_symbol = "[→](#53AFBC)"
 error_symbol = "[→](red)"
 
 [directory]
 truncate_to_repo = false
-style = "#ec00bb"
+style = "#C678DD"
 format = "[$path]($style)[$read_only]($read_only_style) "
 
 [git_branch]
