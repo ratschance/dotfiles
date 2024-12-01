@@ -28,10 +28,11 @@ if ! $(cat /etc/nix/nix.conf | grep -q "experimental-features"); then
 fi
 
 if [ ! -d "$HOME/.config/home-manager" ]; then
-# Home-manager setup
-nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
-nix-channel --update
-nix-shell '<home-manager>' -A install
+# Home-manager setup - todo: figure out if the following three lines are needed once I have another machine to test
+#nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
+#nix-channel --update
+#nix-shell '<home-manager>' -A install
+nix run home-manager/master -- init --switch
 fi
 
 [ -e "$HOME/bin" ] || mkdir -p "$HOME/bin"
