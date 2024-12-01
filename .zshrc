@@ -25,10 +25,12 @@ setopt HIST_SAVE_NO_DUPS
 alias ll='ls -AlhGF'
 export PATH="$PATH:$HOME/bin"
 
+
 apt-history() {
     zcat -qf /var/log/apt/history.log* | grep -Po '^Commandline: apt install (?!.*--reinstall)\K.*'
 }
 
+[ -f $HOME/.nix-profile/etc/profile.d/hm-session-vars.sh ] && source $HOME/.nix-profile/etc/profile.d/hm-session-vars.sh
 [ -f ~/.zprofile ] && source ~/.zprofile
 
 eval "$(starship init zsh)"
