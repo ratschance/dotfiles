@@ -47,3 +47,8 @@ if [ ! -d "$HOME/.config/alacritty" ]; then
 fi
 [ -e "$HOME/.config/alacritty/alacritty.toml" ] || ln -s "$SCRIPT_DIR/alacritty.toml" ~/.config/alacritty/alacritty.toml
 
+# Aerospace setup
+if [ ! -d "$HOME/.config/aerospace" ]; then
+    mkdir -p "$HOME/.config/aerospace"
+fi
+[ -e "$HOME/.config/aerospace/aerospace.toml" ] || ln -s "$SCRIPT_DIR/aerospace.toml" ~/.config/aerospace/aerospace.toml
