@@ -28,11 +28,8 @@ if ! $(cat /etc/nix/nix.conf | grep -q "experimental-features"); then
 fi
 
 if [ ! -d "$HOME/.config/home-manager" ]; then
-# Home-manager setup - todo: figure out if the following three lines are needed once I have another machine to test
-#nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
-#nix-channel --update
-#nix-shell '<home-manager>' -A install
-nix run home-manager/master -- init --switch
+    ln -s "$SCRIPT_DIR/home-manager" "$HOME/.config/"
+    nix run home-manager/master -- init --switch
 fi
 
 [ -e "$HOME/bin" ] || mkdir -p "$HOME/bin"
@@ -46,6 +43,9 @@ if [ ! -d "$HOME/.config/alacritty" ]; then
     git clone https://github.com/alacritty/alacritty-theme ~/.config/alacritty/themes
 fi
 [ -e "$HOME/.config/alacritty/alacritty.toml" ] || ln -s "$SCRIPT_DIR/alacritty.toml" ~/.config/alacritty/alacritty.toml
+
+# Ghostty setup
+[ -e "$HOME/.config/ghostty" ] || ln -s "$SCRIPT_DIR/ghostty" "$HOME/.config/"
 
 # Aerospace setup
 if [ ! -d "$HOME/.config/aerospace" ]; then
