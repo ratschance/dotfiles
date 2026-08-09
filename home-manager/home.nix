@@ -22,23 +22,37 @@
     # # "Hello, world!" when run.
     # pkgs.hello
     aerospace
-    alacritty
     btop
+    bat
+    eza
+    fd
+    fzf
+    git
     gh
     ghostty-bin
     go
+    gofumpt
     httpie
     kubectl
+    kubectl-klock
+    kubectx
+    kubernetes-helm
+    kubecolor
     kind
     k9s
     lazygit
+    lsd
     neovim
     nodejs
     opentofu
     python3
+    ripgrep
     talosctl
+    stern
+    tealdeer
     tmux
     tree-sitter
+    yq-go
     virtualenv
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the

@@ -1,3 +1,4 @@
+export STARSHIP_CONFIG="$HOME/.config/starship.toml"
 source ~/.antigen/antigen.zsh
 antigen use oh-my-zsh
 #antigen theme https://github.com/ratschance/hodgepodge-theme hodgepodge
@@ -5,6 +6,22 @@ antigen bundle zsh-users/zsh-completions src
 antigen bundle zsh-users/zsh-syntax-highlighting
 antigen bundle history-substring-search
 antigen apply
+
+autoload -Uz compinit
+compinit -i
+
+if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
+  . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
+fi
+
+[ -f $HOME/.nix-profile/etc/profile.d/hm-session-vars.sh ] && source $HOME/.nix-profile/etc/profile.d/hm-session-vars.sh
+
+source <(kubectl completion zsh)
+alias k='kubecolor'
+compdef _kubectl k kubecolor
+
+source <(gh completion -s zsh)
+source <(docker completion zsh)
 
 bindkey -r '^[h'
 bindkey -r '^[j'
@@ -30,13 +47,12 @@ apt-history() {
     zcat -qf /var/log/apt/history.log* | grep -Po '^Commandline: apt install (?!.*--reinstall)\K.*'
 }
 
-if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
-  . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
-fi
-
-[ -f $HOME/.nix-profile/etc/profile.d/hm-session-vars.sh ] && source $HOME/.nix-profile/etc/profile.d/hm-session-vars.sh
 [ -f ~/.zprofile ] && source ~/.zprofile
 
 eval "$(starship init zsh)"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+
+# Added by Antigravity CLI installer
+export PATH="/Users/cr/.local/bin:$PATH"
