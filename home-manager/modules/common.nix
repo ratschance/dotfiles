@@ -1,10 +1,7 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
-  # Home Manager needs a bit of information about you and the paths it should
-  # manage.
-  home.username = "cr";
-  home.homeDirectory = "/Users/cr";
+  # Username and homeDirectory are now defined in hosts/<host>.nix
 
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release
@@ -15,11 +12,19 @@
   # release notes.
   home.stateVersion = "23.11"; # Please read the comment before changing.
 
+  home.activation = {
+    rsync-home-manager-applications = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+      rsyncArgs="--archive --checksum --chmod=-w --copy-unsafe-links --delete"
+      apps_source="$genProfilePath/home-path/Applications"
+      mac_apps="$HOME/Applications/Nix Apps"
+      $DRY_RUN_CMD mkdir -p "$mac_apps"
+      $DRY_RUN_CMD ${pkgs.rsync}/bin/rsync ''${rsyncArgs} "$apps_source/" "$mac_apps/"
+    '';
+  };
+
   home.packages = with pkgs; [
-    aerospace
     btop
     bat
-    eza
     fd
     fzf
     git
@@ -38,6 +43,16 @@
     lazygit
     lsd
     neovim
+    (pkgs.bun.overrideAttrs (oldAttrs: rec {
+      version = "1.3.14";
+      src = pkgs.fetchurl {
+        url = "https://github.com/oven-sh/bun/releases/download/bun-v${version}/bun-${if pkgs.stdenv.isDarwin then "darwin" else "linux"}-${if pkgs.stdenv.isAarch64 then "aarch64" else "x64"}.zip";
+        sha256 = {
+          "aarch64-darwin" = "sha256-2LliIYKK1vl6x6wKt+lYcjQa92MAHogD6CZ2UsJlJiA=";
+          "x86_64-linux" = pkgs.lib.fakeSha256;
+        }.${pkgs.stdenv.hostPlatform.system} or pkgs.lib.fakeSha256;
+      };
+    }))
     nodejs
     opentofu
     python3
@@ -63,19 +78,23 @@
     # '')
   ];
 
-  # Home Manager is pretty good at managing dotfiles. The primary way to manage
-  # plain files is through 'home.file'.
   home.file = {
-    # # Building this configuration will create a copy of 'dotfiles/screenrc' in
-    # # the Nix store. Activating the configuration will then make '~/.screenrc' a
-    # # symlink to the Nix store copy.
-    # ".screenrc".source = dotfiles/screenrc;
+    ".vimrc".source = ../../.vimrc;
+    ".tmux.conf".source = ../../.tmux.conf;
+    ".config/starship.toml".source = ../../starship.toml;
+    ".config/alacritty/alacritty.toml".source = ../../alacritty.toml;
+    ".config/ghostty".source = ../../ghostty;
+    ".config/aerospace/aerospace.toml".source = ../../aerospace.toml;
+  };
 
-    # # You can also set the file content immediately.
-    # ".gradle/gradle.properties".text = ''
-    #   org.gradle.console=verbose
-    #   org.gradle.daemon.idletimeout=3600000
-    # '';
+  programs.starship = {
+    enable = true;
+    enableZshIntegration = true;
+  };
+
+  programs.fzf = {
+    enable = true;
+    enableZshIntegration = true;
   };
 
   programs.zsh = {
@@ -138,15 +157,6 @@
           sha256 = "KHujL1/TM5R3m4uQh2nGVC98D6MOyCgQpyFf+8gjKR0=";
         };
       }
-      {
-        name = "zsh-vi-mode";
-        src = pkgs.fetchFromGitHub {
-          owner = "jeffreytse";
-          repo = "zsh-vi-mode";
-          rev = "91cafe4a09b6670cb8e761aa413e5f7b9e00816f";
-          sha256 = "5ZYcxl5sjfn1XfQ7D28Si4OXwCHHapAJSboJfNgl/5A=";
-        };
-      }
     ];
 
     initContent = ''
@@ -192,13 +202,15 @@
       apt-history() {
           zcat -qf /var/log/apt/history.log* | grep -Po '^Commandline: apt install (?!.*--reinstall)\K.*'
       }
-
-      [ -f ~/.zprofile ] && source ~/.zprofile
-      [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-      eval "$(starship init zsh)"
     '';
   };
+
+  programs.zsh.profileExtra = ''
+    # Load private config that we don't want to check in
+    if [ -f ~/.zprofile.local ]; then
+      source ~/.zprofile.local
+    fi
+  '';
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;

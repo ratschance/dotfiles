@@ -2,14 +2,6 @@
 
 SCRIPT_DIR="${HOME}/projects/dotfiles"
 
-# Vim setup
-[ -d "$HOME/.vim" ] || mkdir ~/.vim
-[ -e "$HOME/.vimrc" ] || ln -s "$SCRIPT_DIR/.vimrc" ~/.vimrc
-
-# Tmux setup
-[ -e "$HOME/.tmux.conf" ] || ln -s "$SCRIPT_DIR/.tmux.conf" ~/.tmux.conf
-
-
 # Nix setup
 if [ ! -d "/nix" ]; then
     sh <(curl -L https://nixos.org/nix/install) --daemon
@@ -26,22 +18,3 @@ if [ ! -d "$HOME/.config/home-manager" ]; then
 fi
 
 [ -e "$HOME/bin" ] || mkdir -p "$HOME/bin"
-[ -e "$HOME/bin/starship" ] || curl -sS https://starship.rs/install.sh | sh -s -- --bin-dir "$HOME/bin"
-[ -e "${HOME}/.config/starship.toml" ] || ln -s ${SCRIPT_DIR}/starship.toml ~/.config/starship.toml
-
-
-# Alacritty setup
-if [ ! -d "$HOME/.config/alacritty" ]; then
-    mkdir -p "$HOME/.config/alacritty/themes"
-    git clone https://github.com/alacritty/alacritty-theme ~/.config/alacritty/themes
-fi
-[ -e "$HOME/.config/alacritty/alacritty.toml" ] || ln -s "$SCRIPT_DIR/alacritty.toml" ~/.config/alacritty/alacritty.toml
-
-# Ghostty setup
-[ -e "$HOME/.config/ghostty" ] || ln -s "$SCRIPT_DIR/ghostty" "$HOME/.config/"
-
-# Aerospace setup
-if [ ! -d "$HOME/.config/aerospace" ]; then
-    mkdir -p "$HOME/.config/aerospace"
-fi
-[ -e "$HOME/.config/aerospace/aerospace.toml" ] || ln -s "$SCRIPT_DIR/aerospace.toml" ~/.config/aerospace/aerospace.toml
