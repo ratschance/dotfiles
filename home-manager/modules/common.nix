@@ -10,7 +10,7 @@
   # You should not change this value, even if you update Home Manager. If you do
   # want to update the value, then make sure to first check the Home Manager
   # release notes.
-  home.stateVersion = "23.11"; # Please read the comment before changing.
+  home.stateVersion = "24.11"; # Please read the comment before changing.
 
   home.activation = {
     rsync-home-manager-applications = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
@@ -79,12 +79,12 @@
   ];
 
   home.file = {
-    ".vimrc".source = ../../.vimrc;
-    ".tmux.conf".source = ../../.tmux.conf;
-    ".config/starship.toml".source = ../../starship.toml;
-    ".config/alacritty/alacritty.toml".source = ../../alacritty.toml;
-    ".config/ghostty".source = ../../ghostty;
-    ".config/aerospace/aerospace.toml".source = ../../aerospace.toml;
+    ".vimrc".source = lib.mkDefault ../../.vimrc;
+    ".tmux.conf".source = lib.mkDefault ../../.tmux.conf;
+    ".config/starship.toml".source = lib.mkDefault ../../starship.toml;
+    ".config/alacritty/alacritty.toml".source = lib.mkDefault ../../alacritty.toml;
+    ".config/ghostty".source = lib.mkDefault ../../ghostty;
+    ".config/aerospace/aerospace.toml".source = lib.mkDefault ../../aerospace.toml;
   };
 
   programs.starship = {
@@ -95,6 +95,10 @@
   programs.fzf = {
     enable = true;
     enableZshIntegration = true;
+
+    defaultOptions = [ "--color=dark" ];
+    fileWidget.command = "fd --type f --strip-cwd-prefix --hidden --follow --exclude .git --exclude node_modules --exclude target --exclude .direnv";
+    fileWidget.options = [ "--preview 'bat -n --color=always {}'" "--bind 'ctrl-/:change-preview-window(down|hidden|)'" ];
   };
 
   programs.zsh = {
@@ -104,7 +108,7 @@
     sessionVariables = {
       STARSHIP_CONFIG = "${config.home.homeDirectory}/.config/starship.toml";
       EDITOR = "nvim";
-      PATH = "$HOME/bin:$HOME/.local/bin:$HOME/go/bin:$HOME/.cargo/bin:$PATH";
+      PATH = "$HOME/bin:$HOME/.local/bin:$HOME/go/bin:$HOME/.cargo/bin:$PATH:$HOME/.bun/bin/";
     };
 
     shellAliases = {
