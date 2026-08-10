@@ -14,10 +14,24 @@ if empty(glob('~/.vim/colors/solarized.vim'))
         \ https://raw.githubusercontent.com/frankier/neovim-colors-solarized-truecolor-only/master/colors/solarized.vim
 endif
 
+if empty(glob('~/.vim/colors/solarized8.vim'))
+    silent !curl -fLo ~/.vim/colors/solarized8.vim --create-dirs
+        \ https://raw.githubusercontent.com/lifepillar/vim-solarized8/master/colors/solarized8.vim
+endif
+
 " Important
 set nocompatible
 set background=dark
-colorscheme solarized
+colorscheme solarized8
+
+" Experimental (to me)
+set complete-=i
+set scrolloff=1
+set sidescroll=1
+set sidescrolloff=2
+set sessionoptions-=options
+set termguicolors
+set viewoptions-=options
 
 " Plugins
 call plug#begin('~/.vim/plugged')
@@ -44,7 +58,7 @@ set history=1000
 set ffs=unix,dos,mac
 set isk+=_,$,@,%,# " Remove these characters from word dividers
 set nosol
-let mapleader=','
+let mapleader=' '
 " Enable hidden buffers
 set hidden
 
@@ -53,7 +67,7 @@ set backspace=indent,eol,start " Normal backspace
 "set cmdheight=1 " Set command bar line to 1 high
 set cursorline
 "set list " Show tabs
-set listchars=tab:>·,trail:· " Mark tabs and trailing whitespace
+set listchars=tab:>\ ,trail:-,extends:>,precedes:<,nbsp:+
 "set lz " LazyRedraw
 set mouse=a " Allow mouse use
 set mousemodel=popup
@@ -172,7 +186,7 @@ nnoremap <silent> <F2> :NERDTreeFind<CR>
 nnoremap <silent> <F3> :NERDTreeToggle<CR>
 
 "TagBar
-map <F8> :TagbarToggle<CR>
+map <Leader>t :TagbarToggle<CR>
 
 au BufRead,BufNewFile *.rb,*.erb set tabstop=2 shiftwidth=2 softtabstop=2
 
