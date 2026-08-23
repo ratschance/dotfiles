@@ -10,6 +10,7 @@
 
   home.packages = with pkgs; [
     aerospace
+    ghostty-bin
   ];
 
   programs.zsh.shellAliases = {

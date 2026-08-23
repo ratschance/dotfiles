@@ -29,7 +29,6 @@
     fzf
     git
     gh
-    ghostty-bin
     go
     gofumpt
     httpie
@@ -49,7 +48,7 @@
         url = "https://github.com/oven-sh/bun/releases/download/bun-v${version}/bun-${if pkgs.stdenv.isDarwin then "darwin" else "linux"}-${if pkgs.stdenv.isAarch64 then "aarch64" else "x64"}.zip";
         sha256 = {
           "aarch64-darwin" = "sha256-2LliIYKK1vl6x6wKt+lYcjQa92MAHogD6CZ2UsJlJiA=";
-          "x86_64-linux" = pkgs.lib.fakeSha256;
+          "x86_64-linux" = "sha256-lR7iruhV8IWVruxiJSJqKY0/6oOj3NZGXAnLzN9+hI8=";
         }.${pkgs.stdenv.hostPlatform.system} or pkgs.lib.fakeSha256;
       };
     }))
