@@ -165,6 +165,7 @@
     initContent = ''
       # Sensible setopts
       setopt AUTO_CD
+      setopt AUTO_PUSHD
       setopt EXTENDED_GLOB
       setopt INTERACTIVE_COMMENTS
 
