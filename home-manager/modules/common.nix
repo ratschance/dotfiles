@@ -23,46 +23,58 @@
   };
 
   home.packages = with pkgs; [
-    btop
     bat
+    btop
+    delve
     fd
     fzf
-    git
     gh
+    ghostscript
+    git
     go
     gofumpt
+    gopls
+    gotestsum
     httpie
+    imagemagick
+    k9s
+    kind
+    kubecolor
     kubectl
     kubectl-klock
     kubectx
     kubernetes-helm
-    kubecolor
-    kind
-    k9s
     lazygit
     lsd
+    lua-language-server
+    mermaid-cli
     neovim
+    nodejs
+    opentofu
+    python3
+    ripgrep
+    shellcheck
+    stern
+    stylua
+    talosctl
+    tealdeer
+    terraform-ls
+    tilt
+    tmux
+    tree-sitter
+    virtualenv
+    yaml-language-server
+    yq-go
     (pkgs.bun.overrideAttrs (oldAttrs: rec {
       version = "1.3.14";
       src = pkgs.fetchurl {
-        url = "https://github.com/oven-sh/bun/releases/download/bun-v${version}/bun-${if pkgs.stdenv.isDarwin then "darwin" else "linux"}-${if pkgs.stdenv.isAarch64 then "aarch64" else "x64"}.zip";
+        url = "https://github.com/oven-sh/bun/releases/download/bun-v${version}/bun-${if pkgs.stdenv.hostPlatform.isDarwin then "darwin" else "linux"}-${if pkgs.stdenv.hostPlatform.isAarch64 then "aarch64" else "x64"}.zip";
         sha256 = {
           "aarch64-darwin" = "sha256-2LliIYKK1vl6x6wKt+lYcjQa92MAHogD6CZ2UsJlJiA=";
           "x86_64-linux" = "sha256-lR7iruhV8IWVruxiJSJqKY0/6oOj3NZGXAnLzN9+hI8=";
         }.${pkgs.stdenv.hostPlatform.system} or pkgs.lib.fakeSha256;
       };
     }))
-    nodejs
-    opentofu
-    python3
-    ripgrep
-    talosctl
-    stern
-    tealdeer
-    tmux
-    tree-sitter
-    yq-go
-    virtualenv
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
     # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
