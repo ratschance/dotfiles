@@ -7,7 +7,7 @@ if [ ! -d "/nix" ]; then
     sh <(curl -L https://nixos.org/nix/install) --daemon
 fi
 
-if ! $(cat /etc/nix/nix.conf | grep -q "experimental-features"); then
+if ! cat /etc/nix/nix.conf | grep -q "experimental-features"; then
     echo "experimental-features = nix-command flakes" | sudo tee -a /etc/nix/nix.conf
     sudo systemctl restart nix-daemon.service
 fi
