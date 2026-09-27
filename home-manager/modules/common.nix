@@ -23,6 +23,7 @@
   };
 
   home.packages = with pkgs; [
+    age
     bat
     btop
     delve
@@ -36,6 +37,7 @@
     gopls
     gotestsum
     httpie
+    htop
     imagemagick
     k9s
     kind
@@ -54,6 +56,7 @@
     python3
     ripgrep
     shellcheck
+    sops
     stern
     stylua
     talosctl
@@ -96,6 +99,7 @@
     ".config/alacritty/alacritty.toml".source = lib.mkDefault ../../alacritty.toml;
     ".config/ghostty".source = lib.mkDefault ../../ghostty;
     ".config/aerospace/aerospace.toml".source = lib.mkDefault ../../aerospace.toml;
+    ".config/zsh.md".source = lib.mkDefault ../../docs/zsh.md;
   };
 
   programs.starship = {
@@ -117,9 +121,10 @@
     enableCompletion = true;
 
     sessionVariables = {
-      STARSHIP_CONFIG = "${config.home.homeDirectory}/.config/starship.toml";
       EDITOR = "nvim";
       PATH = "$HOME/bin:$HOME/.local/bin:$HOME/go/bin:$HOME/.cargo/bin:$PATH:$HOME/.bun/bin/";
+      STARSHIP_CONFIG = "${config.home.homeDirectory}/.config/starship.toml";
+      SOPS_AGE_KEY_FILE = "$HOME/.config/sops/age/keys.txt";
     };
 
     shellAliases = {
@@ -206,6 +211,21 @@
       bindkey '^[[A' history-substring-search-up
       bindkey '^[[B' history-substring-search-down
 
+      # Zsh line editor
+      autoload -Uz edit-command-line
+      zle -N edit-command-line
+      bindkey -M main '^G' edit-command-line
+      bindkey -M main '^[.' insert-last-word
+
+      zsh-cheatsheet() {
+        zle -I
+        command bat --paging=always --style=plain "$HOME/.config/zsh.md"
+        zle -R
+      }
+      zle -N zsh-cheatsheet
+      # Ctrl+Shift+/ sends ^_; this replaces the default undo binding.
+      bindkey -M main '^_' zsh-cheatsheet
+
       bindkey -r '^[h'
       bindkey -r '^[j'
       bindkey -r '^[k'
@@ -214,10 +234,6 @@
       bindkey -r '^[i'
       bindkey -r '^[o'
       bindkey -r '^[p'
-
-      apt-history() {
-          zcat -qf /var/log/apt/history.log* | grep -Po '^Commandline: apt install (?!.*--reinstall)\K.*'
-      }
     '';
   };
 
