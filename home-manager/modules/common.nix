@@ -131,7 +131,7 @@
       ls = "lsd";
       l = "lsd -l";
       la = "lsd -A";
-      ll = "lsd -AlhGF";
+      ll = "lsd -Alg";
       lt = "lsd --tree";
       lg = "lazygit";
       k = "kubecolor";
